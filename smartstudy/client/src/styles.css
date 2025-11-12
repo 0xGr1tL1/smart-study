@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color: theme(colors.slate);
+  background-color: theme(colors.bg-soft);
+}
+
+body {
+  @apply bg-bg-soft text-slate font-body;
+}
+
+.btn {
+  @apply rounded-mdplus px-4 py-2 font-label transition-transform duration-200 active:scale-95;
+}
+
+.btn-primary {
+  @apply bg-primary text-white shadow-soft hover:brightness-110;
+}
+
+.btn-accent {
+  @apply bg-accent text-slate font-semibold shadow-soft hover:brightness-110;
+}
+
+.card {
+  @apply bg-card rounded-mdplus shadow-soft p-5 border border-border;
+}
+
+.pill {
+  @apply inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-white border border-border text-muted;
+}
+
+.sidebar-link {
+  @apply flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium text-muted hover:bg-white hover:text-primary transition-colors;
+}
+
+.sidebar-link.active {
+  @apply bg-white text-primary shadow-soft;
+}
+
+.stat-card {
+  @apply card flex flex-col gap-2;
+}
+
+.glass {
+  backdrop-filter: blur(24px);
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 15px 40px rgba(3, 27, 78, 0.08);
+}
