@@ -4,7 +4,7 @@ import User from '../models/User.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 import { signupValidation, loginValidation } from '../middleware/validators.js';
 import { requireAuth } from '../middleware/auth.js';
-import { validEmail,validPassword } from '../../utils/validateInput.js';
+import { validEmail,validPassword } from '../utils/validateInput.js';
 const router = express.Router();
 
 /**
