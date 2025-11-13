@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { format } from 'date-fns'
 import { sendChat } from '../api/chat'
-import { Bot, CheckSquare, MapPin, Send, UserRound } from 'lucide-react'
+import { Bot, CheckSquare, Maximize2, MapPin, Send, UserRound } from 'lucide-react'
 
 const suggestions = [
   'Add Algorithms lecture tomorrow 10:00-12:00 room B201',
@@ -116,19 +116,24 @@ export default function Chatbot(){
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <div>
+        <div className="flex items-center gap-2">
+          <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+            <Bot className="text-primary" size={20}/>
+          </div>
           <h3 className="text-lg font-title text-slate">AI Assistant</h3>
-          <p className="text-xs uppercase tracking-[0.3em] text-muted">Ask anything about your schedule</p>
         </div>
+        <button className="text-muted hover:text-slate transition-colors">
+          <Maximize2 size={18}/>
+        </button>
       </div>
 
-      <div className="rounded-2xl border border-border bg-white p-4 space-y-4 h-[320px] flex flex-col">
+      <div className="rounded-2xl border border-border bg-bg-soft/30 p-4 space-y-4 h-[500px] flex flex-col">
         <div className="flex-1 overflow-auto space-y-3 pr-2">
           {log.map((msg, idx)=>(
             <div key={idx} className={`flex ${msg.role==='user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[90%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${msg.role==='user' ? 'bg-primary text-white' : 'bg-bg-soft text-slate'}`}>
-                <div className="flex items-center gap-2 font-semibold mb-1 text-xs uppercase tracking-wide">
-                  {msg.role==='user' ? <UserRound size={14}/> : <Bot size={14}/>} {msg.role==='user'?'You':'Smart Assistant'}
+              <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${msg.role==='user' ? 'bg-primary text-white' : 'bg-white text-slate border border-border'}`}>
+                <div className="flex items-center gap-2 font-semibold mb-2 text-xs">
+                  {msg.role==='user' ? <UserRound size={14}/> : <Bot size={14} className="text-primary"/>} {msg.role==='user'?'You':'Smart Assistant'}
                 </div>
                 <p className={`${msg.tone==='error' ? 'text-error font-semibold' : ''}`}>{msg.content}</p>
                 {msg.event && (
@@ -194,22 +199,15 @@ export default function Chatbot(){
         </div>
         <div className="flex gap-2">
           <input
-            className="flex-1 border border-border rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary/40"
-            placeholder='e.g., "Plan 2 Pomodoro sessions for Math"'
+            className="flex-1 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white"
+            placeholder='Ask me anything...'
             value={input}
             onChange={e=>setInput(e.target.value)}
             onKeyDown={e=>{ if(e.key==='Enter') send() }}
           />
-          <button className="btn btn-primary flex items-center gap-2" onClick={send} disabled={loading}>
-            Send <Send size={16}/>
+          <button className="btn bg-accent hover:bg-accent/90 text-white flex items-center justify-center gap-2 px-5 py-3 rounded-xl font-semibold shadow-lg shadow-accent/30 hover:shadow-xl hover:shadow-accent/40 transition-all" onClick={send} disabled={loading}>
+            <Send size={18}/>
           </button>
-        </div>
-        <div className="flex flex-wrap gap-2 text-xs text-muted">
-          {suggestions.map(text => (
-            <button key={text} onClick={()=>setInput(text)} className="px-3 py-1 bg-bg-soft rounded-full border border-border text-left">
-              {text}
-            </button>
-          ))}
         </div>
       </div>
     </div>

@@ -119,6 +119,10 @@ export default function Dashboard(){
         <section className="p-6 space-y-6">
           <StatsBar />
 
+          <div className="card">
+            <UpcomingEvents />
+          </div>
+
           <div className="grid gap-6 xl:grid-cols-3">
             <div className="card xl:col-span-2">
               <div className="flex items-center justify-between mb-4">
@@ -129,10 +133,6 @@ export default function Dashboard(){
             <div className="card">
               <Todo />
             </div>
-          </div>
-
-          <div className="card">
-            <UpcomingEvents />
           </div>
 
           <div className="grid gap-6 lg:grid-cols-3">
