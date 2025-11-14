@@ -4,7 +4,7 @@ import User from '../models/User.js';
 import { asyncHandler } from '../middleware/errorHandler.js';
 import { signupValidation, loginValidation } from '../middleware/validators.js';
 import { requireAuth } from '../middleware/auth.js';
-import { validEmail,validPassword } from '../utils/validateInput.js';
+
 const router = express.Router();
 
 /**
@@ -23,12 +23,6 @@ const generateToken = (userId) => {
  */
 router.post('/signup', signupValidation, asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-  if (!validEmail){
-    return res.status(400).json({error:"Email format error"})
-  }
-  if (!validPassword(password)){
-    return res.status(400).json({error:"Password must be 6-16 characters and include at least one uppercase letter, one lowercase letter, one number, and one special character."})
-  }
   // Check if user already exists
   const existingUser = await User.findOne({ email });
   if (existingUser) {
