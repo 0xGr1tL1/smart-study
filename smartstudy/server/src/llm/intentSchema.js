@@ -51,6 +51,14 @@ export const HelpPayload = z.object({
   prompt: z.string().optional(),
   suggestions: z.array(z.string()).optional(),
 });
+export const BulkEventsPayload = z.object({
+  events: z.array(EventPayload),
+  summary: z.string().optional(),
+});
+export const BulkTasksPayload = z.object({
+  tasks: z.array(TaskPayload),
+  summary: z.string().optional(),
+});
 export const Intent = z.discriminatedUnion('intent', [
   z.object({ intent: z.literal('add_event'), payload: EventPayload }),
   z.object({ intent: z.literal('update_event'), payload: UpdatePayload }),
@@ -62,4 +70,6 @@ export const Intent = z.discriminatedUnion('intent', [
   z.object({ intent: z.literal('delete_task'), payload: z.object({ id: z.string() }) }),
   z.object({ intent: z.literal('get_tasks'), payload: TaskListPayload.optional().default({}) }),
   z.object({ intent: z.literal('control_pomodoro'), payload: PomodoroPayload }),
+  z.object({ intent: z.literal('plan_schedule'), payload: BulkEventsPayload }),
+  z.object({ intent: z.literal('plan_tasks'), payload: BulkTasksPayload }),
 ]);
