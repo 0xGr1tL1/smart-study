@@ -54,6 +54,15 @@ const formatAssistantResponse = (payload) => {
         shouldRefreshEvents: true,
         isBulk: true
       }
+      case 'events_deleted':
+        return {
+          content: `Deleted ${payload.count} event(s).`,
+          events: payload.events,
+          shouldRefreshEvents: true,
+          isBulk: true
+        }
+      case 'delete_none':
+        return { content: 'No matching events to delete.' }
     case 'tasks_plan_created':
       return {
         content: payload.summary || `Created ${payload.count} task(s) for your plan.`,
@@ -141,11 +150,11 @@ export default function Chatbot(){
         </button>
       </div>
 
-      <div className="rounded-2xl border border-border bg-bg-soft/30 p-4 space-y-4 h-[500px] flex flex-col">
+      <div className="rounded-2xl border border-border dark:border-[#1F2A44] bg-bg-soft/30 dark:bg-[#0D1525]/50 p-4 space-y-4 h-[500px] flex flex-col">
         <div className="flex-1 overflow-auto space-y-3 pr-2">
           {log.map((msg, idx)=>(
             <div key={idx} className={`flex ${msg.role==='user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${msg.role==='user' ? 'bg-primary text-white' : 'bg-white text-slate border border-border'}`}>
+              <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${msg.role==='user' ? 'bg-primary text-white' : 'bg-white dark:bg-[#182339] text-slate dark:text-[#E6EAF4] border border-border dark:border-[#1F2A44]'}`}>
                 <div className="flex items-center gap-2 font-semibold mb-2 text-xs">
                   {msg.role==='user' ? <UserRound size={14}/> : <Bot size={14} className="text-primary"/>} {msg.role==='user'?'You':'Smart Assistant'}
                 </div>
@@ -165,7 +174,7 @@ export default function Chatbot(){
                 {msg.events && (
                   <div className="mt-3 space-y-2">
                     {msg.events.map(evt => (
-                      <div key={evt._id} className="rounded-xl border border-border bg-white text-slate px-3 py-2">
+                      <div key={evt._id} className="rounded-xl border border-border dark:border-[#1F2A44] bg-white dark:bg-[#101725] text-slate dark:text-[#E6EAF4] px-3 py-2">
                         <div className="font-semibold">{evt.title}</div>
                         <div className="text-xs text-muted">{formatDateTime(evt.start)} → {formatDateTime(evt.end)}</div>
                         {evt.location && <div className="text-xs text-muted flex items-center gap-1"><MapPin size={10}/> {evt.location}</div>}
@@ -174,7 +183,7 @@ export default function Chatbot(){
                   </div>
                 )}
                 {msg.task && (
-                  <div className="mt-3 rounded-xl border border-border bg-white text-slate px-3 py-2 flex items-start gap-3">
+                  <div className="mt-3 rounded-xl border border-border dark:border-[#1F2A44] bg-white dark:bg-[#101725] text-slate dark:text-[#E6EAF4] px-3 py-2 flex items-start gap-3">
                     <CheckSquare size={16} className={msg.task.done ? 'text-primary' : 'text-muted'}/>
                     <div>
                       <div className="font-semibold">{msg.task.title}</div>
@@ -186,7 +195,7 @@ export default function Chatbot(){
                 {msg.tasks && (
                   <div className="mt-3 space-y-2">
                     {msg.tasks.map(task => (
-                      <div key={task._id} className="rounded-xl border border-border bg-white text-slate px-3 py-2">
+                      <div key={task._id} className="rounded-xl border border-border dark:border-[#1F2A44] bg-white dark:bg-[#101725] text-slate dark:text-[#E6EAF4] px-3 py-2">
                         <div className="font-semibold flex items-center gap-2">
                           <CheckSquare size={14} className={task.done ? 'text-primary' : 'text-muted'}/>
                           {task.title}
@@ -200,7 +209,7 @@ export default function Chatbot(){
                 {msg.suggestions && msg.suggestions.length > 0 && (
                   <div className="mt-3 flex flex-wrap gap-2">
                     {msg.suggestions.map((text, i)=>(
-                      <button key={i} onClick={()=>setInput(text)} className="px-3 py-1 rounded-full border border-border text-xs bg-white text-slate hover:border-primary">
+                      <button key={i} onClick={()=>setInput(text)} className="px-3 py-1 rounded-full border border-border dark:border-[#1F2A44] text-xs bg-white dark:bg-[#182339] text-slate dark:text-[#E6EAF4] hover:border-primary">
                         {text}
                       </button>
                     ))}
@@ -213,7 +222,7 @@ export default function Chatbot(){
         </div>
         <div className="flex gap-2">
           <input
-            className="flex-1 border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white"
+            className="flex-1 border border-border dark:border-[#1F2A44] rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary/40 bg-white dark:bg-[#121A2B] text-slate dark:text-[#E6EAF4]"
             placeholder='Ask me anything...'
             value={input}
             onChange={e=>setInput(e.target.value)}
