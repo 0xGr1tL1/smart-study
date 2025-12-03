@@ -72,4 +72,19 @@ export const Intent = z.discriminatedUnion('intent', [
   z.object({ intent: z.literal('control_pomodoro'), payload: PomodoroPayload }),
   z.object({ intent: z.literal('plan_schedule'), payload: BulkEventsPayload }),
   z.object({ intent: z.literal('plan_tasks'), payload: BulkTasksPayload }),
+  // Bulk delete events
+  z.object({
+    intent: z.literal('delete_events'),
+    payload: z.object({
+      eventIds: z.array(z.string()).min(1).optional(),
+      filter: z
+        .object({
+          titleContains: z.string().optional(),
+          from: z.string().datetime().optional(),
+          to: z.string().datetime().optional(),
+        })
+        .optional(),
+      confirm: z.boolean().default(true),
+    }),
+  }),
 ]);

@@ -10,7 +10,7 @@ const router = express.Router();
 router.use(requireAuth);
 const SYSTEM = `You are SmartStudy's AI assistant for schedules, tasks, and focus.
 Always output STRICT JSON (no prose) with this top-level shape:
-{"intent":"add_event|update_event|delete_event|get_events|add_task|update_task|delete_task|get_tasks|control_pomodoro|plan_schedule|plan_tasks|help","payload":{}}.
+{"intent":"add_event|update_event|delete_event|delete_events|get_events|add_task|update_task|delete_task|get_tasks|control_pomodoro|plan_schedule|plan_tasks|help","payload":{}}.
 
 Schemas:
 - add_event.payload: { "title": string, "start": ISO, "end": ISO, "allDay"?: boolean, "type"?: "event"|"course", "courseCode"?: string, "location"?: string, "notes"?: string }
@@ -25,6 +25,7 @@ Schemas:
 - plan_schedule.payload: { "events": array of event objects (same structure as add_event.payload), "summary"?: string describing the plan }
 - plan_tasks.payload: { "tasks": array of task objects (same structure as add_task.payload), "summary"?: string describing the plan }
 - help.payload: { "prompt"?: string, "suggestions"?: string[] }
+- delete_events.payload: { "eventIds"?: string[], "filter"?: { "titleContains"?: string, "from"?: ISO, "to"?: ISO }, "confirm"?: boolean }
 
 Rules:
 - Prefer exact IDs from context when modifying or deleting items.
@@ -234,6 +235,29 @@ router.post('/', async (req,res)=>{
         summary: summary || `Created ${createdTasks.length} task(s) for your plan.`,
         count: createdTasks.length
       });
+    }
+    if(data.intent==='delete_events'){
+      const { eventIds, filter } = data.payload;
+      const query = { userId: req.userId };
+      if(Array.isArray(eventIds) && eventIds.length){
+        query._id = { $in: eventIds };
+      }else if(filter){
+        if(filter.titleContains){
+          query.title = { $regex: filter.titleContains, $options: 'i' };
+        }
+        if(filter.from || filter.to){
+          query.start = {};
+          if(filter.from) query.start.$gte = new Date(filter.from);
+          if(filter.to) query.start.$lte = new Date(filter.to);
+        }
+      }else{
+        return res.json({ ok:false, action:'error', error:'Provide eventIds or filter' });
+      }
+      const events = await Event.find(query).select('_id title start end');
+      if(!events.length) return res.json({ ok:true, action:'delete_none', count:0, events:[] });
+      const ids = events.map(e=>e._id);
+      await Event.deleteMany({ _id: { $in: ids }, userId: req.userId });
+      return res.json({ ok:true, action:'events_deleted', count: ids.length, events: events.map(e=>({ id: e._id.toString(), title: e.title })) });
     }
     return res.status(400).json({ error: 'Unhandled intent' });
   }catch(e){
