@@ -5,7 +5,7 @@ import { Bot, CheckSquare, Maximize2, MapPin, Send, UserRound } from 'lucide-rea
 
 const suggestions = [
   'Add Algorithms lecture tomorrow 10:00-12:00 room B201',
-  'Move calculus assignment to Friday 5pm',
+  'I\'m learning React and I\'m a beginner, arrange my week',
   'Start a 25 minute Pomodoro session',
   'Show my open tasks for this week'
 ]
@@ -46,6 +46,20 @@ const formatAssistantResponse = (payload) => {
       return {
         content: `Here are the events that match your request (${payload.events?.length ?? 0} results).`,
         events: payload.events
+      }
+    case 'plan_created':
+      return {
+        content: payload.summary || `Created ${payload.count} event(s) for your schedule.`,
+        events: payload.events,
+        shouldRefreshEvents: true,
+        isBulk: true
+      }
+    case 'tasks_plan_created':
+      return {
+        content: payload.summary || `Created ${payload.count} task(s) for your plan.`,
+        tasks: payload.tasks,
+        shouldRefreshTasks: true,
+        isBulk: true
       }
     case 'task_created':
       return {
