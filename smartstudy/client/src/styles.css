@@ -49,3 +49,43 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 15px 40px rgba(3, 27, 78, 0.08);
 }
+
+/* Dark mode overrides */
+.dark body {
+  @apply bg-[#0B1220] text-[#E6EAF4];
+}
+
+.dark .card {
+  @apply bg-[#121A2B] border-[#1F2A44] shadow-none;
+}
+
+.dark .pill {
+  @apply bg-[#121A2B] border-[#1F2A44] text-[#A6B1C2];
+}
+
+.dark .sidebar-link {
+  @apply text-[#A6B1C2] hover:bg-[#101725] hover:text-white;
+}
+
+.dark .sidebar-link.active {
+  @apply bg-[#101725] text-white;
+}
+
+.dark .btn-primary {
+  @apply bg-primary text-white;
+}
+
+.dark .btn-accent {
+  @apply bg-[#FFB661] text-[#0B1220];
+}
+
+.dark .glass {
+  background: rgba(18, 26, 43, 0.75);
+  border-color: rgba(255,255,255,0.06);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.35);
+}
+
+.dark .text-muted { color: #A6B1C2; }
+.dark .border-border { border-color: #1F2A44; }
+.dark .bg-bg-soft { background-color: #0B1220; }
+.dark .text-slate { color: #E6EAF4; }

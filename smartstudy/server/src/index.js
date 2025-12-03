@@ -11,7 +11,6 @@ import pomodoroRoutes from './routes/pomodoro.js';
 import timetableRoutes from './routes/timetable.js';
 import { connectDB } from './config/db.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
-
 const app = express();
 const PORT = process.env.PORT || 5000;
 
