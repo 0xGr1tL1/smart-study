@@ -109,7 +109,7 @@ export default function Pomodoro(){
             <Play size={18}/> {running ? 'Pause' : 'Start'}
           </button>
           <button 
-            className="btn bg-white border border-border hover:bg-gray-50 text-slate flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all" 
+            className="btn bg-white dark:bg-[#182339] border border-border dark:border-[#1F2A44] hover:bg-gray-50 dark:hover:bg-[#1F2A44] text-slate dark:text-[#E6EAF4] flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all" 
             onClick={reset}
           >
             <RotateCcw size={18}/> Reset
@@ -117,7 +117,7 @@ export default function Pomodoro(){
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border">
+      <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border dark:border-[#1F2A44]">
         <div className="text-center">
           <p className="text-2xl font-bold text-slate">{stats.sessions}</p>
           <p className="text-xs text-muted mt-1">Sessions Today</p>

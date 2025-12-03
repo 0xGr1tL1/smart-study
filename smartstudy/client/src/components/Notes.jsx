@@ -47,22 +47,22 @@ export default function Notes(){
           </div>
           <h3 className="text-lg font-title text-slate">Quick Notes</h3>
         </div>
-        <button className="btn bg-white border border-border hover:bg-gray-50 text-slate flex items-center gap-2 px-4 py-2 rounded-xl transition-all" onClick={()=>setShowForm(!showForm)}>
+        <button className="btn bg-white dark:bg-[#182339] border border-border dark:border-[#1F2A44] hover:bg-gray-50 dark:hover:bg-[#1F2A44] text-slate dark:text-[#E6EAF4] flex items-center gap-2 px-4 py-2 rounded-xl transition-all" onClick={()=>setShowForm(!showForm)}>
           <Plus size={16}/>
         </button>
       </div>
 
       {showForm && (
-        <div className="rounded-2xl border border-border p-4 bg-bg-soft space-y-3">
+        <div className="rounded-2xl border border-border dark:border-[#1F2A44] p-4 bg-bg-soft dark:bg-[#0D1525]/40 space-y-3">
           <input
-            className="w-full border border-border rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent/40 bg-white"
+            className="w-full border border-border dark:border-[#1F2A44] rounded-xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent/40 bg-white dark:bg-[#121A2B] text-slate dark:text-[#E6EAF4]"
             placeholder="Note title..."
             value={title}
             onChange={e=>setTitle(e.target.value)}
             autoFocus
           />
           <textarea
-            className="w-full border border-border rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-accent/40 h-24 resize-none bg-white"
+            className="w-full border border-border dark:border-[#1F2A44] rounded-xl p-4 focus:outline-none focus:ring-2 focus:ring-accent/40 h-24 resize-none bg-white dark:bg-[#121A2B] text-slate dark:text-[#E6EAF4]"
             placeholder="Note content..."
             value={content}
             onChange={e=>setContent(e.target.value)}
@@ -71,7 +71,7 @@ export default function Notes(){
             <button className="btn bg-accent hover:bg-accent/90 text-white px-4 py-2 rounded-xl" onClick={add}>
               Save Note
             </button>
-            <button className="btn bg-white border border-border hover:bg-gray-50 text-slate px-4 py-2 rounded-xl" onClick={()=>setShowForm(false)}>
+            <button className="btn bg-white dark:bg-[#182339] border border-border dark:border-[#1F2A44] hover:bg-gray-50 dark:hover:bg-[#1F2A44] text-slate dark:text-[#E6EAF4] px-4 py-2 rounded-xl" onClick={()=>setShowForm(false)}>
               Cancel
             </button>
           </div>
@@ -82,7 +82,7 @@ export default function Notes(){
         {notes.map(note => {
           const updatedAt = note.updatedAt || note.createdAt || Date.now()
           return (
-            <div key={note._id} className="rounded-2xl border-l-4 border-l-accent border-t border-r border-b border-border p-4 bg-white shadow-sm hover:shadow-md transition-shadow">
+            <div key={note._id} className="rounded-2xl border-l-4 border-l-accent border-t border-r border-b border-border dark:border-[#1F2A44] p-4 bg-white dark:bg-[#182339] shadow-sm hover:shadow-md transition-shadow">
               <div className="flex items-start justify-between mb-2">
                 <div className="flex-1">
                   <p className="font-semibold text-slate">{note.title}</p>
@@ -99,7 +99,7 @@ export default function Notes(){
           )
         })}
         {notes.length===0 && (
-          <div className="rounded-2xl border border-dashed border-border p-8 text-center">
+          <div className="rounded-2xl border border-dashed border-border dark:border-[#1F2A44] p-8 text-center bg-transparent">
             <FileText className="mx-auto mb-2 text-muted" size={32}/>
             <p className="text-muted text-sm">No notes yet</p>
             <p className="text-xs text-muted mt-1">Click + to add your first note</p>

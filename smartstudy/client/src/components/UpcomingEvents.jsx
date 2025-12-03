@@ -30,7 +30,7 @@ export default function UpcomingEvents(){
       </div>
       <div className="space-y-3">
         {upcoming.map(evt => (
-          <div key={evt._id} className="rounded-2xl border border-border p-4 bg-white flex items-start gap-4 hover:shadow-md transition-shadow">
+          <div key={evt._id} className="rounded-2xl border border-border dark:border-[#1F2A44] p-4 bg-white dark:bg-[#182339] flex items-start gap-4 hover:shadow-md transition-shadow">
             <div className="text-primary font-semibold text-center min-w-[80px]">
               <div className="text-2xl">{timeFormatter.format(evt.start)}</div>
               <div className="text-xs text-muted mt-1">{evt.start.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
@@ -46,7 +46,7 @@ export default function UpcomingEvents(){
           </div>
         ))}
         {upcoming.length===0 && (
-          <div className="rounded-2xl border border-dashed border-border p-8 text-center">
+          <div className="rounded-2xl border border-dashed border-border dark:border-[#1F2A44] p-8 text-center bg-transparent">
             <Calendar className="mx-auto mb-2 text-muted" size={32}/>
             <p className="text-muted text-sm">No upcoming events</p>
             <p className="text-xs text-muted mt-1">Use the calendar to add events</p>
